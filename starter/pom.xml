@@ -15,12 +15,18 @@
 
     <modules>
         <module>web</module>
+        <module>swagger</module>
     </modules>
 
     <dependencies>
         <dependency>
             <groupId>net.dreamlu</groupId>
             <artifactId>mica-auto</artifactId>
+        </dependency>
+        <!--lombok-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
     </dependencies>
 

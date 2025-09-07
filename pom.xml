@@ -19,6 +19,7 @@
         <module>common</module>
         <module>starter</module>
         <module>framework</module>
+        <module>server</module>
     </modules>
 
     <properties>
@@ -42,6 +43,16 @@
             <dependency>
                 <groupId>com.github.cadecode</groupId>
                 <artifactId>uni-boot-template-starter-web</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.cadecode</groupId>
+                <artifactId>uni-boot-template-starter-swagger</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.cadecode</groupId>
+                <artifactId>uni-boot-template-framework</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>

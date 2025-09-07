@@ -12,8 +12,8 @@ import org.springframework.context.annotation.Configuration;
  */
 @Data
 @Configuration
-@ConfigurationProperties("uni-boot.base-config")
-public class BaseConfig {
+@ConfigurationProperties("uni-boot.framework")
+public class FrameworkConfig {
 
     private String version;
 

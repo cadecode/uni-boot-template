@@ -21,6 +21,10 @@
             <groupId>com.github.cadecode</groupId>
             <artifactId>uni-boot-template-starter-web</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.github.cadecode</groupId>
+            <artifactId>uni-boot-template-starter-swagger</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>net.dreamlu</groupId>
