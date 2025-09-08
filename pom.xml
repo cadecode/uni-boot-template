@@ -52,6 +52,11 @@
             </dependency>
             <dependency>
                 <groupId>com.github.cadecode</groupId>
+                <artifactId>uni-boot-template-starter-mybatis</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.cadecode</groupId>
                 <artifactId>uni-boot-template-framework</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -141,7 +146,7 @@
             </plugin>-->
             <!--jasypt 配置加密插件-->
             <!--mvn jasypt:encrypt \
-                -D'jasypt.plugin.path'="file:ubp-admin/src/main/resources/application.yaml" \
+                -D'jasypt.plugin.path'="file:uniboot-admin/src/main/resources/application.yaml" \
                 -D'jasypt.encryptor.password'="the password"-->
             <plugin>
                 <groupId>com.github.ulisesbocchio</groupId>

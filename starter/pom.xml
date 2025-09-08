@@ -16,6 +16,7 @@
     <modules>
         <module>web</module>
         <module>swagger</module>
+        <module>mybatis</module>
     </modules>
 
     <dependencies>
