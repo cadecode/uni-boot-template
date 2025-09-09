@@ -15,6 +15,7 @@
 
     <modules>
         <module>actuator</module>
+        <module>datasource</module>
         <module>web</module>
         <module>swagger</module>
         <module>mybatis</module>
