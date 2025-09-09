@@ -1,0 +1,39 @@
+server:
+  shutdown: graceful
+
+spring:
+  application:
+    name: UniBootTemplateAdmin
+  lifecycle:
+    timeout-per-shutdown-phase: 60s
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+# swagger
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: default
+      packages-to-scan: com.github.cadecode.uniboot
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
+
+# 自定义配置
+uni-boot:
+  framework:
+    version: '@project.version@'
+  swagger:
+    title: API Docs
+    description: '${spring.application.name} 接口文档'
+    version: ${uni-boot.framework.version}
+    contact-name: Cade Li
+    contact-url: https://github.com/cadecode/uni-boot-template
+    contact-email: cade.li@qq.com
