@@ -5,30 +5,23 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.github.cadecode</groupId>
-        <artifactId>uni-boot-template-parent</artifactId>
+        <artifactId>uni-boot-template-starter</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <packaging>pom</packaging>
-    <artifactId>uni-boot-template-starter</artifactId>
-    <description>starter 集成</description>
-
-    <modules>
-        <module>actuator</module>
-        <module>web</module>
-        <module>swagger</module>
-        <module>mybatis</module>
-    </modules>
+    <artifactId>uni-boot-template-starter-actuator</artifactId>
+    <description>系统监控工具集成</description>
 
     <dependencies>
+        <!--actuator-->
         <dependency>
-            <groupId>net.dreamlu</groupId>
-            <artifactId>mica-auto</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-        <!--lombok-->
+        <!--SpringBootAdmin-->
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-starter-client</artifactId>
         </dependency>
     </dependencies>
 
