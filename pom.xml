@@ -58,6 +58,16 @@
             </dependency>
             <dependency>
                 <groupId>com.github.cadecode</groupId>
+                <artifactId>uni-boot-template-starter-actuator</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.cadecode</groupId>
+                <artifactId>uni-boot-template-starter-datasource</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.cadecode</groupId>
                 <artifactId>uni-boot-template-framework</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -195,12 +205,6 @@
             <id>test</id>
             <properties>
                 <profileActive>test</profileActive>
-            </properties>
-        </profile>
-        <profile>
-            <id>staging</id>
-            <properties>
-                <profileActive>staging</profileActive>
             </properties>
         </profile>
         <profile>
