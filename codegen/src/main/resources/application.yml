@@ -1,3 +1,15 @@
 spring:
+  profiles:
+    active: @profileActive@
   application:
     name: UniBootTemplateCodegen
+
+# mybatis
+mybatis-flex:
+  # 多数据源
+  datasource:
+    ds1:
+      type: com.alibaba.druid.pool.DruidDataSource
+      url: jdbc:mysql://127.0.0.1:3306/test
+      username: test
+      password: test

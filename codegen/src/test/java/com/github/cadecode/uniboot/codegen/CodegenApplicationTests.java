@@ -1,6 +1,8 @@
 package com.github.cadecode.uniboot.codegen;
 
+import com.github.cadecode.uniboot.codegen.util.DbDocKit;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 /**
@@ -12,12 +14,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class CodegenApplicationTests {
 
+    @Autowired
+    private DbDocKit dbDocKit;
+
     /**
      * 生成代码
      */
     @Test
     public void genCode() {
-        System.out.println(11);
+
     }
 
     /**
@@ -25,7 +30,15 @@ public class CodegenApplicationTests {
      */
     @Test
     public void genDbDoc() {
-
+        String fileType = "WORD";
+        String fileName = "myDB";
+        String fileOutputDir = "./";
+        String version = "1.0.0";
+        String description = "数据库设计文档生成";
+        String ignoreTablePrefix = "";
+        String ignoreTableSuffix = "";
+        String[] ignoreTableNames = {};
+        dbDocKit.dbdocIgnore(fileType, fileName, fileOutputDir, version, description, ignoreTablePrefix, ignoreTableSuffix, ignoreTableNames);
     }
 
 }

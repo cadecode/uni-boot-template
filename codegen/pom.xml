@@ -23,6 +23,10 @@
             <groupId>com.github.cadecode</groupId>
             <artifactId>uni-boot-template-common</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.github.cadecode</groupId>
+            <artifactId>uni-boot-template-starter-mybatis</artifactId>
+        </dependency>
 
         <!--test-->
         <dependency>
