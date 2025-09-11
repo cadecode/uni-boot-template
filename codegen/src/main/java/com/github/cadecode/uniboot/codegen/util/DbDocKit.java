@@ -8,6 +8,7 @@ import cn.smallbun.screw.core.engine.EngineFileType;
 import cn.smallbun.screw.core.engine.EngineTemplateType;
 import cn.smallbun.screw.core.execute.DocumentationExecute;
 import cn.smallbun.screw.core.process.ProcessConfig;
+import com.mybatisflex.core.datasource.DataSourceKey;
 import com.mybatisflex.core.datasource.FlexDataSource;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -103,16 +104,17 @@ public class DbDocKit implements EnvironmentAware {
     private Configuration getConfiguration(String version, String description,
                                            EngineConfig engineConfig, ProcessConfig processConfig) {
         FlexDataSource flexDataSource = (FlexDataSource) dataSource;
-        DataSource dataSource = flexDataSource.getDefaultDataSource();
+        String currKey = StrUtil.nullToDefault(DataSourceKey.get(), flexDataSource.getDefaultDataSourceKey());
+        DataSource currDataSource = flexDataSource.getDataSourceMap().get(currKey);
         HikariDataSource hikariDataSource;
         // 兼容 HikariDataSource 和其他连接池
-        if (dataSource instanceof HikariDataSource hDataSource) {
+        if (currDataSource instanceof HikariDataSource hDataSource) {
             hikariDataSource = hDataSource;
         } else {
             HikariConfig hikariConfig = new HikariConfig();
             hikariConfig.setJdbcUrl(flexDataSource.getUrl());
-            hikariConfig.setUsername((String) ReflectUtil.getFieldValue(dataSource, "username"));
-            hikariConfig.setPassword((String) ReflectUtil.getFieldValue(dataSource, "password"));
+            hikariConfig.setUsername((String) ReflectUtil.getFieldValue(currDataSource, "username"));
+            hikariConfig.setPassword((String) ReflectUtil.getFieldValue(currDataSource, "password"));
             hikariDataSource = new HikariDataSource(hikariConfig);
         }
         // 从配置中读取版本号
