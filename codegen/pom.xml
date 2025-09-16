@@ -13,7 +13,6 @@
     <description>代码生成器，基于 mybatis-flex</description>
 
     <properties>
-        <spring-shell.version>3.2.3</spring-shell.version>
         <mybatis-flex-codegen.version>1.8.8</mybatis-flex-codegen.version>
         <screw.version>1.0.5</screw.version>
     </properties>
