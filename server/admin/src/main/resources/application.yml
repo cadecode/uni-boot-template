@@ -2,6 +2,8 @@ server:
   shutdown: graceful
 
 spring:
+  profiles:
+    active: @profileActive@
   application:
     name: UniBootTemplateAdmin
   lifecycle:
@@ -9,6 +11,52 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
+  datasource:
+    # druid
+    druid:
+      socketTimeout: 60000
+      initialSize: 5
+      minIdle: 10
+      maxActive: 20
+      maxWait: 60000
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      maxEvictableIdleTimeMillis: 900000
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      webStatFilter:
+        enabled: true
+      statViewServlet:
+        enabled: true
+        allow:
+        url-pattern: /druid/*
+        login-username: dev
+        login-password: dev123
+      filter:
+        stat:
+          enabled: true
+          log-slow-sql: true
+          slow-sql-millis: 1000
+          merge-sql: false
+        wall:
+          config:
+            multi-statement-allow: true
+
+# mybatis
+mybatis-flex:
+  mapper-locations: classpath*:mapper/mysql/**/*.xml
+  type-aliases-package: com.github.cadecode.**.bean,com.github.cadecode.**.mybatis.converter
+  # mybatis 原生配置
+  configuration:
+    map-underscore-to-camel-case: true
+  # mybatis-flex 配置
+  global-config:
+    # 默认 id 生成规则
+    key-config:
+      key-type: generator
+      value: uuid
 
 # swagger
 springdoc:
@@ -29,10 +77,10 @@ knife4j:
 # 自定义配置
 uni-boot:
   framework:
-    version: '@project.version@'
+    version: @project.version@
   swagger:
     title: API Docs
-    description: '${spring.application.name} 接口文档'
+    description: ${spring.application.name} 接口文档
     version: ${uni-boot.framework.version}
     contact-name: Cade Li
     contact-url: https://github.com/cadecode/uni-boot-template
