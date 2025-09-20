@@ -1,6 +1,7 @@
 package com.github.cadecode.uniboot.codegen;
 
 import com.github.cadecode.uniboot.codegen.util.DbDocKit;
+import com.github.cadecode.uniboot.codegen.util.GenCodeKit;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,6 +16,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class CodegenApplicationTests {
 
     @Autowired
+    private GenCodeKit genCodeKit;
+
+    @Autowired
     private DbDocKit dbDocKit;
 
     /**
@@ -22,7 +26,12 @@ public class CodegenApplicationTests {
      */
     @Test
     public void genCode() {
-
+        String outputDir = ".";
+        String basePackage = "com.github.cadecode.uniboot.codegen.test";
+        String author = "Cade Li";
+        String tablePrefix = "";
+        String[] tableNames = {};
+        genCodeKit.codegen(outputDir, basePackage, author, tablePrefix, tableNames);
     }
 
     /**
