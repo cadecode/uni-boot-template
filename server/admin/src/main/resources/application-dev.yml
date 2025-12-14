@@ -1,12 +1,3 @@
-# server
-server:
-  port: 8080
-
-# log
-logging:
-  file:
-    path: /log/${spring.application.name}/
-
 # mybatis
 mybatis-flex:
   # 多数据源

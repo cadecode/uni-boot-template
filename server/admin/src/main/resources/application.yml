@@ -1,11 +1,18 @@
 server:
   shutdown: graceful
+  port: 8080
+
+# log
+logging:
+  file:
+    path: /log/${spring.application.name}/
 
 spring:
   profiles:
     active: @profileActive@
   application:
-    name: UniBootTemplateAdmin
+    # 应用名
+    name: server-admin
   lifecycle:
     timeout-per-shutdown-phase: 60s
   jackson:
