@@ -11,13 +11,13 @@ import java.util.Objects;
  * @author Cade Li
  * @date 2023/6/20
  */
-public class PipelineGenerator<T extends PipelineFilter<A>, A extends PipelineContext> {
+public class PipelineGenerator<A extends PipelineContext> {
 
     @Getter
     private DefaultPipelineFilterChain<A> firstChain;
     private DefaultPipelineFilterChain<A> lastChain;
 
-    public void appendFilter(T filter) {
+    public void appendFilter(PipelineFilter<A> filter) {
         DefaultPipelineFilterChain<A> newChain = new DefaultPipelineFilterChain<>(null, filter);
         if (Objects.isNull(firstChain)) {
             firstChain = newChain;
