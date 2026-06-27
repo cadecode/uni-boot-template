@@ -1,0 +1,686 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="9a51be20-2d81-4944-9df7-531465683bb8" name="Changes" comment="docs: add README + AGENTS + 命名规则 markdown doc">
+      <change beforePath="$PROJECT_DIR$/.docs/guide/naming-convention.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AGENTS.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/codegen/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/codegen/src/main/java/com/github/cadecode/uniboot/codegen/CodegenApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/codegen/src/main/java/com/github/cadecode/uniboot/codegen/generator/EntityConvertGenerator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/codegen/src/main/java/com/github/cadecode/uniboot/codegen/util/DbDocKit.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/codegen/src/main/java/com/github/cadecode/uniboot/codegen/util/GenCodeKit.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/codegen/src/main/resources/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/codegen/src/main/resources/banner.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/codegen/src/main/resources/template/enjoy/controller.tpl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/codegen/src/main/resources/template/enjoy/entityConvert.tpl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/codegen/src/test/java/com/github/cadecode/uniboot/codegen/CodegenApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/github/cadecode/uniboot/common/consts/ApiStatus.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/github/cadecode/uniboot/common/enums/ErrorCode.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/github/cadecode/uniboot/common/enums/ExtensionType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/github/cadecode/uniboot/common/exception/BaseException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/github/cadecode/uniboot/common/exception/ExtensionException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/github/cadecode/uniboot/common/exception/GeneralException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/github/cadecode/uniboot/common/exception/HelperException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/github/cadecode/uniboot/common/exception/RateLimitException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/github/cadecode/uniboot/common/extension/pipeline/AbstractPipelineContext.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/github/cadecode/uniboot/common/extension/pipeline/DefaultPipelineFilterChain.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/github/cadecode/uniboot/common/extension/pipeline/PipelineContext.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/github/cadecode/uniboot/common/extension/pipeline/PipelineFilterChain.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/github/cadecode/uniboot/common/extension/pipeline/PipelineGenerator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/github/cadecode/uniboot/common/extension/pipeline/filter/AbstractPipelineFilter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/github/cadecode/uniboot/common/extension/pipeline/filter/PipelineFilter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/github/cadecode/uniboot/common/extension/pipeline/selector/FilterSelector.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/github/cadecode/uniboot/common/extension/pipeline/selector/LocalListFilterSelector.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/github/cadecode/uniboot/common/extension/plugin/AbstractPluginExecutor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/github/cadecode/uniboot/common/extension/plugin/PluginContext.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/github/cadecode/uniboot/common/extension/plugin/PluginExecutor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/github/cadecode/uniboot/common/extension/plugin/PluginSelectorExecutor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/github/cadecode/uniboot/common/extension/plugin/PluginService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/github/cadecode/uniboot/common/extension/plugin/config/PluginAutoConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/github/cadecode/uniboot/common/util/AssertUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/github/cadecode/uniboot/common/util/JacksonUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/github/cadecode/uniboot/common/util/JacksonXUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/github/cadecode/uniboot/common/util/SpringUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/github/cadecode/uniboot/common/util/TreeUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dependency/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/framework/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/framework/src/main/java/com/github/cadecode/uniboot/framework/config/FrameworkConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/framework/src/main/java/com/github/cadecode/uniboot/framework/config/JacksonConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/framework/src/main/java/com/github/cadecode/uniboot/framework/config/ThreadPoolConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/framework/src/main/java/com/github/cadecode/uniboot/framework/config/WebMvcConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/admin/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/admin/src/main/java/com/github/cadecode/uniboot/admin/AdminApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/admin/src/main/resources/application-dev.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/admin/src/main/resources/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/admin/src/main/resources/banner.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/admin/src/test/java/com/github/cadecode/uniboot/admin/AdminApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/actuator/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/datasource/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/datasource/src/main/java/com/github/cadecode/uniboot/starter/datasource/annotation/UseDynamicDs.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/datasource/src/main/java/com/github/cadecode/uniboot/starter/datasource/aspect/DynamicDsAspect.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/datasource/src/main/java/com/github/cadecode/uniboot/starter/datasource/config/DruidConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/datasource/src/main/java/com/github/cadecode/uniboot/starter/datasource/config/DynamicDsAutoConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/datasource/src/main/java/com/github/cadecode/uniboot/starter/datasource/config/DynamicDsProperties.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/datasource/src/main/java/com/github/cadecode/uniboot/starter/datasource/dynamic/DynamicDs.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/datasource/src/main/java/com/github/cadecode/uniboot/starter/datasource/dynamic/DynamicDsHolder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/datasource/src/main/java/com/github/cadecode/uniboot/starter/datasource/exception/DynamicDsException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/datasource/src/main/java/com/github/cadecode/uniboot/starter/datasource/util/TransactionUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/mybatis/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/mybatis/src/main/java/com/github/cadecode/uniboot/starter/mybatis/config/MyBatisFlexConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/mybatis/src/main/java/com/github/cadecode/uniboot/starter/mybatis/config/PageHelperConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/mybatis/src/main/java/com/github/cadecode/uniboot/starter/mybatis/convertor/BoolToIntTypeHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/mybatis/src/main/java/com/github/cadecode/uniboot/starter/mybatis/convertor/DbEnumConvertible.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/mybatis/src/main/java/com/github/cadecode/uniboot/starter/mybatis/convertor/DefaultEnumTypeHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/mybatis/src/main/java/com/github/cadecode/uniboot/starter/mybatis/convertor/ObjToStrTypeHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/mybatis/src/main/java/com/github/cadecode/uniboot/starter/mybatis/listener/BaseEntityListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/mybatis/src/main/java/com/github/cadecode/uniboot/starter/mybatis/model/BaseEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/swagger/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/swagger/src/main/java/com/github/cadecode/uniboot/starter/swagger/config/SwaggerAutoConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/swagger/src/main/java/com/github/cadecode/uniboot/starter/swagger/config/SwaggerProperties.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/web/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/web/src/main/java/com/github/cadecode/uniboot/starter/web/advisor/ApiResultAdvisor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/web/src/main/java/com/github/cadecode/uniboot/starter/web/advisor/GeneralExceptionAdvisor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/web/src/main/java/com/github/cadecode/uniboot/starter/web/advisor/WebExceptionAdvisor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/web/src/main/java/com/github/cadecode/uniboot/starter/web/annotation/ApiFormat.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/web/src/main/java/com/github/cadecode/uniboot/starter/web/convertor/ParamEnumConvertible.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/web/src/main/java/com/github/cadecode/uniboot/starter/web/convertor/ParamEnumConvertorFactory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/web/src/main/java/com/github/cadecode/uniboot/starter/web/enums/WebErrorEnum.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/web/src/main/java/com/github/cadecode/uniboot/starter/web/model/ApiResult.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/web/src/main/java/com/github/cadecode/uniboot/starter/web/model/PageParams.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/starter/web/src/main/java/com/github/cadecode/uniboot/starter/web/model/PageResult.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CopilotPersistence">
+    <persistenceIdMap>
+      <entry key="_D:/project-space/product/uni-boot-template" value="32Eoj2ufBL4AcHsOdyj16HWG0db" />
+    </persistenceIdMap>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="AnnotationType" />
+      </list>
+    </option>
+  </component>
+  <component name="FormatOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="empty" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="MIXED" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;cadecode&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/cadecode/uni-boot-template.git&quot;,
+    &quot;accountId&quot;: &quot;e4b8de5b-e770-4250-be60-7d94c7bcb9b6&quot;
+  }
+}</component>
+  <component name="MavenImportPreferences">
+    <option name="explicitlyEnabledProfiles" value="dev" />
+    <option name="explicitlyDisabledProfiles" value="test" />
+  </component>
+  <component name="MavenRunner">
+    <option name="skipTests" value="true" />
+  </component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="OptimizeOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="32Eoj2ufBL4AcHsOdyj16HWG0db" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showVisibilityIcons" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "JUnit.AdminApplicationTests.contextLoads.executor": "Debug",
+    "JUnit.CodegenApplicationTests.genCode.executor": "Debug",
+    "JUnit.CodegenApplicationTests.genDbDoc.executor": "Run",
+    "JUnit.DbDoc.executor": "Run",
+    "JUnit.GenCode.executor": "Run",
+    "JUnit.GenDbDoc.executor": "Run",
+    "Maven.uni-boot-template-parent [clean].executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "Spring Boot.AdminApplication.executor": "Debug",
+    "Spring Boot.CodegenApplication.executor": "Debug",
+    "Spring Boot.UniBootCodegenApplication.executor": "Run",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "dev",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/project-space/work/x-boot-template",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.24482758",
+    "settings.editor.selected.configurable": "configurable.group.appearance",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\project-space\github\uni-boot-template\server\admin\src\test\java" />
+      <recent name="D:\project-space\github\uni-boot-template\starter\extension\src\main\java\com\github\cadecode\uniboot\starter\extension" />
+      <recent name="D:\project-space\github\uni-boot-template\starter" />
+      <recent name="D:\project-space\github\uni-boot-template\server\admin\src\main\resources" />
+      <recent name="D:\project-space\github\uni-boot-template\server\admin\src\main\java\com\github\cadecode\uniboot\admin" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\project-space\github\uni-boot-template\codegen\src\main\resources\template\enjoy" />
+      <recent name="D:\project-space\github\uni-boot-template\codegen\src\main\resources\template" />
+      <recent name="D:\project-space\github\uni-boot-template\codegen\src" />
+      <recent name="D:\project-space\github\uni-boot-template\codegen" />
+      <recent name="D:\project-space\github\uni-boot-template" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.github.cadecode.uniboot.admin.pipline" />
+      <recent name="com.github.cadecode.uniboot.common.extension.pipeline.selector" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.AdminApplication">
+    <configuration name="AdminApplicationTests.contextLoads" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="uni-boot-template-server-admin" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.github.cadecode.uniboot.admin.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.github.cadecode.uniboot.admin" />
+      <option name="MAIN_CLASS_NAME" value="com.github.cadecode.uniboot.admin.AdminApplicationTests" />
+      <option name="METHOD_NAME" value="contextLoads" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GenCode" type="JUnit" factoryName="JUnit" temporary="true">
+      <module name="uni-boot-template-codegen" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.github.cadecode.uniboot.codegen.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.github.cadecode.uniboot.codegen" />
+      <option name="MAIN_CLASS_NAME" value="com.github.cadecode.uniboot.codegen.CodegenApplicationTests" />
+      <option name="METHOD_NAME" value="genCode" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GenDbDoc" type="JUnit" factoryName="JUnit" temporary="true">
+      <module name="uni-boot-template-codegen" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.github.cadecode.uniboot.codegen.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.github.cadecode.uniboot.codegen" />
+      <option name="MAIN_CLASS_NAME" value="com.github.cadecode.uniboot.codegen.CodegenApplicationTests" />
+      <option name="METHOD_NAME" value="genDbDoc" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="uni-boot-template" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="uni-boot-template" />
+      <option name="filePath" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <module name="uni-boot-template" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="DEBUG_JUST_MY_CODE" value="false" />
+      <option name="RUN_TOOL" value="" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="AdminApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="uni-boot-template-server-admin" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.github.cadecode.uniboot.admin.AdminApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.github.cadecode.uniboot.admin.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CodegenApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="uni-boot-template-codegen" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.github.cadecode.uniboot.codegen.CodegenApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.github.cadecode.uniboot.codegen.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="JUnit.AdminApplicationTests.contextLoads" />
+      <item itemvalue="JUnit.GenCode" />
+      <item itemvalue="JUnit.GenDbDoc" />
+      <item itemvalue="Spring Boot.AdminApplication" />
+      <item itemvalue="Spring Boot.CodegenApplication" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.AdminApplicationTests.contextLoads" />
+        <item itemvalue="JUnit.GenCode" />
+        <item itemvalue="JUnit.GenDbDoc" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-26cb7f24e5b0-intellij.indexing.shared.core-IU-253.29346.50" />
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.29346.50" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9a51be20-2d81-4944-9df7-531465683bb8" name="Changes" comment="" />
+      <created>1756034918705</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1756034918705</updated>
+      <workItem from="1756034919888" duration="32000" />
+      <workItem from="1756995233757" duration="18538000" />
+      <workItem from="1757258320039" duration="133000" />
+      <workItem from="1757258479435" duration="9483000" />
+      <workItem from="1757509973024" duration="5151000" />
+      <workItem from="1757515949942" duration="22820000" />
+      <workItem from="1762873501042" duration="635000" />
+      <workItem from="1762876284054" duration="7000" />
+      <workItem from="1763199497350" duration="615000" />
+      <workItem from="1763213506289" duration="615000" />
+      <workItem from="1763298739081" duration="2523000" />
+      <workItem from="1765557147772" duration="11000" />
+      <workItem from="1765558006003" duration="633000" />
+      <workItem from="1765631801140" duration="2428000" />
+      <workItem from="1765717738816" duration="101000" />
+      <workItem from="1765718086230" duration="4534000" />
+      <workItem from="1765809318910" duration="1839000" />
+      <workItem from="1766236915753" duration="10978000" />
+      <workItem from="1767370087137" duration="1890000" />
+      <workItem from="1768894619005" duration="6934000" />
+      <workItem from="1769245566760" duration="144000" />
+      <workItem from="1772119854323" duration="13000" />
+      <workItem from="1772203617322" duration="606000" />
+      <workItem from="1772968645441" duration="2000" />
+      <workItem from="1772976444563" duration="289000" />
+      <workItem from="1773235560336" duration="3874000" />
+      <workItem from="1777643119703" duration="18000" />
+      <workItem from="1777643193700" duration="35000" />
+      <workItem from="1777643268371" duration="108000" />
+      <workItem from="1777643381378" duration="274000" />
+      <workItem from="1777643752475" duration="381000" />
+      <workItem from="1778164047229" duration="794000" />
+      <workItem from="1778507864503" duration="75000" />
+      <workItem from="1778507957896" duration="499000" />
+      <workItem from="1782488998424" duration="178000" />
+      <workItem from="1782549986580" duration="3916000" />
+      <workItem from="1782573932863" duration="876000" />
+    </task>
+    <task id="LOCAL-00001" summary="chore: initial commit">
+      <option name="closed" value="true" />
+      <created>1757083167815</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1757083167815</updated>
+    </task>
+    <task id="LOCAL-00002" summary="chore: initial commit">
+      <option name="closed" value="true" />
+      <created>1757083224685</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1757083224685</updated>
+    </task>
+    <task id="LOCAL-00003" summary="chore: add license file">
+      <option name="closed" value="true" />
+      <created>1757083307594</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1757083307594</updated>
+    </task>
+    <task id="LOCAL-00004" summary="build: add dependency, project parent module">
+      <option name="closed" value="true" />
+      <created>1757173369920</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1757173369920</updated>
+    </task>
+    <task id="LOCAL-00005" summary="build: add dependency, project parent module">
+      <option name="closed" value="true" />
+      <created>1757173518582</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1757173518582</updated>
+    </task>
+    <task id="LOCAL-00006" summary="build: add common, starter, framework module">
+      <option name="closed" value="true" />
+      <created>1757173636177</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1757173636177</updated>
+    </task>
+    <task id="LOCAL-00007" summary="build: add common, starter, framework module">
+      <option name="closed" value="true" />
+      <created>1757173719429</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1757173719429</updated>
+    </task>
+    <task id="LOCAL-00008" summary="feat(starter): add swagger starter">
+      <option name="closed" value="true" />
+      <created>1757258991105</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1757258991105</updated>
+    </task>
+    <task id="LOCAL-00009" summary="feat(starter): add mybatis starter">
+      <option name="closed" value="true" />
+      <created>1757346962096</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1757346962096</updated>
+    </task>
+    <task id="LOCAL-00010" summary="feat(*): add codegen and server module">
+      <option name="closed" value="true" />
+      <created>1757428823477</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1757428823477</updated>
+    </task>
+    <task id="LOCAL-00011" summary="feat(starter): add actuator starter">
+      <option name="closed" value="true" />
+      <created>1757428940718</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1757428940718</updated>
+    </task>
+    <task id="LOCAL-00012" summary="feat(starter): add datasource starter">
+      <option name="closed" value="true" />
+      <created>1757431125219</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1757431125219</updated>
+    </task>
+    <task id="LOCAL-00013" summary="build(*): 引入 datasource starter 模块">
+      <option name="closed" value="true" />
+      <created>1757514254999</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1757514254999</updated>
+    </task>
+    <task id="LOCAL-00014" summary="feat(codegen): 添加数据库文档生成工具、相应测试类">
+      <option name="closed" value="true" />
+      <created>1757602628599</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1757602628599</updated>
+    </task>
+    <task id="LOCAL-00015" summary="fix(codegen): 数据库文档生成支持多数据源">
+      <option name="closed" value="true" />
+      <created>1757603272126</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1757603272126</updated>
+    </task>
+    <task id="LOCAL-00016" summary="chore(server): update admin application yml">
+      <option name="closed" value="true" />
+      <created>1758031041771</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1758031041771</updated>
+    </task>
+    <task id="LOCAL-00017" summary="chore(codegen): remove unused pom properties">
+      <option name="closed" value="true" />
+      <created>1758031795738</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1758031795738</updated>
+    </task>
+    <task id="LOCAL-00018" summary="feat(codegen): 添加代码生成工具类即 controller 等模板">
+      <option name="closed" value="true" />
+      <created>1758377471709</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1758377471709</updated>
+    </task>
+    <task id="LOCAL-00019" summary="test(codegen): 添加代码生成工具类测试方法">
+      <option name="closed" value="true" />
+      <created>1758377562284</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1758377562284</updated>
+    </task>
+    <task id="LOCAL-00020" summary="chore: remove redundant version in pom">
+      <option name="closed" value="true" />
+      <created>1765718267520</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1765718267520</updated>
+    </task>
+    <task id="LOCAL-00021" summary="chore(server): remove redundant config">
+      <option name="closed" value="true" />
+      <created>1765718754918</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1765718754918</updated>
+    </task>
+    <task id="LOCAL-00022" summary="refactor(common): extension StrategyXXX 命名改为 PluginXXX">
+      <option name="closed" value="true" />
+      <created>1766415974839</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1766415974839</updated>
+    </task>
+    <task id="LOCAL-00023" summary="refactor(common): 移除不必要的泛型">
+      <option name="closed" value="true" />
+      <created>1766416604009</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1766416604009</updated>
+    </task>
+    <task id="LOCAL-00024" summary="test(server): add application tests">
+      <option name="closed" value="true" />
+      <created>1766501787764</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1766501787764</updated>
+    </task>
+    <task id="LOCAL-00025" summary="docs: add README + AGENTS + 命名规则 markdown doc">
+      <option name="closed" value="true" />
+      <created>1768912003538</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1768912003538</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="temp" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="chore: initial commit" />
+    <MESSAGE value="chore: add license file" />
+    <MESSAGE value="build: add dependency, project parent module" />
+    <MESSAGE value="feat(*): add common, starter, framework module" />
+    <MESSAGE value="feat(*): add common, starter, framework module" />
+    <MESSAGE value="feat(starter): add swagger starter" />
+    <MESSAGE value="feat(starter): add mybatis starter" />
+    <MESSAGE value="feat(*): add codegen and server module" />
+    <MESSAGE value="feat(starter): add actuator starter" />
+    <MESSAGE value="feat(starter): add datasource starter" />
+    <MESSAGE value="build(*): 引入 datasource starter 模块" />
+    <MESSAGE value="feat(codegen): 添加数据库文档生成工具、相应测试类" />
+    <MESSAGE value="fix(codegen): 数据库文档生成支持多数据源" />
+    <MESSAGE value="chore(server): update admin application yml" />
+    <MESSAGE value="chore(codegen): remove unused pom properties" />
+    <MESSAGE value="feat(codegen): 添加代码生成工具类即 controller 等模板" />
+    <MESSAGE value="test(codegen): 添加代码生成工具类测试方法" />
+    <MESSAGE value="chore: remove redundant version in pom" />
+    <MESSAGE value="chore(server): remove redundant config" />
+    <MESSAGE value="refactor(common): extension StrategyXXX 命名改为 PluginXXX" />
+    <MESSAGE value="refactor(common): 移除不必要的泛型" />
+    <MESSAGE value="test(server): add application tests" />
+    <MESSAGE value="docs: add README + AGENTS + 命名规则 markdown doc" />
+    <MESSAGE value="1" />
+    <option name="LAST_COMMIT_MESSAGE" value="1" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/com/alibaba/druid-spring-boot-3-starter/1.2.21/druid-spring-boot-3-starter-1.2.21-sources.jar!/com/alibaba/druid/spring/boot3/autoconfigure/DruidDataSourceAutoConfigure.java</url>
+          <line>66</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+  <component name="github-copilot-workspace">
+    <instructionFileLocations>
+      <option value=".github/instructions" />
+    </instructionFileLocations>
+    <promptFileLocations>
+      <option value=".github/prompts" />
+    </promptFileLocations>
+  </component>
+</project>
