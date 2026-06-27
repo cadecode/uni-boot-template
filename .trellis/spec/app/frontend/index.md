@@ -42,7 +42,8 @@ Before writing frontend code, review:
 - Component: `<script setup lang="ts">`, props typed with `defineProps<T>()`, `inheritAttrs: false` when wrapping
 - Template: custom components PascalCase, Element Plus kebab-case
 - Store: `storeToRefs()` for state, actions destructured directly
-- Service: API calls only in `services/`, not in components/composables
+- Service: API calls only in `services/`, axios instance in `services/api/client.ts`
+- Axios interceptors: centralized in `services/api/interceptors.ts`
 - Styles: `<style scoped lang="scss">`, BEM naming
 - Tests: `.spec.ts` mirrors `src/` structure
 - Imports: types → 3rd-party → components → utils/composables

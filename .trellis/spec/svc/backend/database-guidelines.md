@@ -40,8 +40,15 @@ public interface BaseEntity {
     void setUpdateTime(LocalDateTime dateTime);
     String getUpdateUser();
     void setUpdateUser(String user);
+
+    // Default setter hook — used by SetListener for field-level operations
+    default Object set(Object entity, String property, Object value) {
+        return value;
+    }
 }
 ```
+
+> ⚠️ Audit fields use `LocalDateTime`, not `java.util.Date`.
 
 ### Entity Naming Conventions
 
@@ -85,16 +92,56 @@ CREATE TABLE sys_user (
 -- Maps to: adminFlag, deletedFlag in Java entity
 ```
 
+### BaseEntityListener (Auto-Fill Audit Fields)
+
+MyBatis-Flex listener auto-populates `createTime`/`updateTime` on insert/update:
+
+```java
+// svc/starter/mybatis/.../listener/BaseEntityListener.java
+public class BaseEntityListener implements InsertListener, UpdateListener, SetListener {
+    @Override
+    public void onInsert(Object entity) {
+        if (entity instanceof BaseEntity baseEntity) {
+            baseEntity.setCreateTime(LocalDateTime.now());
+        }
+    }
+    @Override
+    public void onUpdate(Object entity) {
+        if (entity instanceof BaseEntity baseEntity) {
+            baseEntity.setUpdateTime(LocalDateTime.now());
+        }
+    }
+}
+```
+
+> Uses MyBatis-Flex's `InsertListener`/`UpdateListener`/`SetListener` interfaces — NOT the generic `EntityListener<T>`.
+
+### Registering Listeners (MyBatisFlexConfig)
+
+```java
+// svc/starter/mybatis/.../config/MyBatisFlexConfig.java
+@Configuration
+public class MyBatisFlexConfig {
+    @Bean
+    public MyBatisFlexCustomizer myBatisFlexCustomizer(BaseEntityListener baseEntityListener) {
+        return globalConfig -> {
+            globalConfig.registerInsertListener(baseEntityListener, BaseEntity.class);
+            globalConfig.registerUpdateListener(baseEntityListener, BaseEntity.class);
+            globalConfig.registerSetListener(baseEntityListener, BaseEntity.class);
+        };
+    }
+}
+```
+
 ---
 
 ## Mapper Pattern
 
-Mappers are interfaces in `mapper/` package, annotated with `@Mapper` (MyBatis-Flex):
+Mappers are interfaces in `mapper/` package:
 
 ```java
-@Mapper
+@Mapper  // MyBatis-Flex annotation
 public interface UserMapper extends BaseMapper<User> {
-    // Custom queries via XML or annotation
     List<User> selectByCondition(QueryWrapper query);
 }
 ```
@@ -146,8 +193,24 @@ public class ObjToStrTypeHandler extends BaseTypeHandler<Object> {
 Enum-to-database value mapping interface:
 
 ```java
+// svc/starter/mybatis/.../convertor/DbEnumConvertible.java
 public interface DbEnumConvertible {
-    String getDbValue();  // Value stored in database
+    int dbValue();  // Integer value stored in database
+}
+```
+
+### DefaultEnumTypeHandler (Generic Enum Handler)
+
+Automatically handles all enums — uses `dbValue()` if `DbEnumConvertible`, otherwise `ordinal()`:
+
+```java
+// svc/starter/mybatis/.../convertor/DefaultEnumTypeHandler.java
+// Registered as the default enum type handler:
+// mybatis.configuration.default-enum-type-handler=...DefaultEnumTypeHandler
+public class DefaultEnumTypeHandler<E extends Enum<?>> extends BaseTypeHandler<E> {
+    // Builds internal map at construction time
+    // If enum implements DbEnumConvertible → use dbValue() as key
+    // Otherwise → use ordinal() as key
 }
 ```
 
@@ -155,16 +218,32 @@ public interface DbEnumConvertible {
 
 ## Pagination
 
-### PageHelper (for MyBatis XML-based queries)
+### PageHelper Config
 
 ```java
-@Service
-public class UserService {
-    public Page<User> pageUsers(int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        List<User> list = userMapper.selectAll();
-        return new PageInfo<>(list);
+// svc/starter/mybatis/.../config/PageHelperConfig.java
+@Configuration
+public class PageHelperConfig {
+    @Bean
+    public PageInterceptor pageInterceptor() {
+        PageInterceptor pageInterceptor = new PageInterceptor();
+        Properties properties = new Properties();
+        properties.setProperty("reasonable", "true");    // pageNum<=0 → first page
+        properties.setProperty("autoRuntimeDialect", "true");  // Auto-detect DB dialect
+        // properties.setProperty("page-size-zero", "true");  // pageSize=0 → all (disabled)
+        pageInterceptor.setProperties(properties);
+        return pageInterceptor;
     }
+}
+```
+
+### PageHelper Usage
+
+```java
+public Page<User> pageUsers(int pageNum, int pageSize) {
+    PageHelper.startPage(pageNum, pageSize);
+    List<User> list = userMapper.selectAll();
+    return new PageInfo<>(list);
 }
 ```
 

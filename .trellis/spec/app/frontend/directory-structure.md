@@ -35,7 +35,7 @@ app/
 │   ├── services/                    # API service layer (encapsulates backend calls)
 │   │   ├── userService.ts
 │   │   └── api/
-│   │       ├── client.ts           # Axios instance config
+│   │       ├── client.ts           # Axios instance + base config
 │   │       └── interceptors.ts     # Request/response interceptors
 │   ├── utils/                       # Utility functions (pure, no side effects)
 │   │   ├── formatDate.ts

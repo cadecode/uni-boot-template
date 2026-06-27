@@ -121,6 +121,54 @@ export function formatDate(date: Date, format = 'YYYY-MM-DD'): string {
 
 ---
 
+## Axios Interceptor Pattern
+
+Centralized request/response handling in `services/api/`:
+
+```typescript
+// services/api/client.ts
+import axios from 'axios'
+
+export const request = axios.create({
+  baseURL: import.meta.env.VITE_API_BASE_URL || '/api',
+  timeout: 10000,
+})
+
+// services/api/interceptors.ts
+import { request } from './client'
+import { ElMessage } from 'element-plus'
+
+request.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token')
+  if (token) config.headers.Authorization = `Bearer ${token}`
+  return config
+})
+
+request.interceptors.response.use(
+  (response) => response.data,  // Unwrap to data directly
+  (error) => {
+    const msg = error.response?.data?.error?.message || '请求失败'
+    ElMessage.error(msg)
+    return Promise.reject(error)
+  }
+)
+
+// services/userService.ts — uses the configured client
+import { request } from './api/client'
+import type { UserInfo } from '@/types/User'
+
+export const userService = {
+  async getUser(id: string): Promise<UserInfo> {
+    const { data } = await request.get(`/api/users/${id}`)
+    return data
+  },
+}
+```
+
+> Key: Only `services/` calls axios. Components and composables call services, never raw HTTP.
+
+---
+
 ## Styles
 
 - Scoped styles: `<style scoped lang="scss">`

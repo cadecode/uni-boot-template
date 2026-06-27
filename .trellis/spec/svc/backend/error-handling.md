@@ -60,6 +60,47 @@ public interface ErrorCode {
 }
 ```
 
+### WebErrorEnum (Concrete Implementation)
+
+Real project pattern — per-constant HTTP status override via anonymous class:
+
+```java
+// svc/starter/web/.../enums/WebErrorEnum.java
+@Getter
+public enum WebErrorEnum implements ErrorCode {
+    VALIDATED_ERROR("WEB_1000", "参数校验不通过") {
+        @Override public int getStatus() { return ApiStatus.BAD_REQUEST; }
+    },
+    REQ_PARAM_INVALID("WEB_1001", "请求参数无效") {
+        @Override public int getStatus() { return ApiStatus.BAD_REQUEST; }
+    },
+    REQUEST_RATE_LIMITED("WEB_1005", "请求已被限流") {
+        @Override public int getStatus() { return ApiStatus.TOO_MANY_REQUESTS; }
+    },
+    NO_RESOURCE_FOUND("WEB_1007", "请求资源不存在") {
+        @Override public int getStatus() { return ApiStatus.NOT_FOUND; }
+    },
+    RES_BODY_NULL("WEB_9999", "响应体为空");  // Special: returns 200
+
+    private final String code;
+    private final String message;
+}
+```
+
+### ApiStatus (HTTP Status Constants)
+
+```java
+// svc/common/.../consts/ApiStatus.java
+public interface ApiStatus {
+    int OK = 200;
+    int BAD_REQUEST = 400;
+    int NOT_FOUND = 404;
+    int TOO_MANY_REQUESTS = 429;
+    int SERVER_ERROR = 500;
+    // ... other standard codes
+}
+```
+
 ---
 
 ## Throwing Exceptions
@@ -204,6 +245,34 @@ public class GeneralExceptionAdvisor {
 ```
 
 **Order**: WebExceptionAdvisor (HIGHEST) → GeneralExceptionAdvisor (default)
+
+### 3. ApiResultAdvisor (ResponseBodyAdvice)
+
+Wraps controller return values into `ApiResult<T>` automatically:
+
+```java
+// svc/starter/web/.../advisor/ApiResultAdvisor.java
+@RestControllerAdvice
+public class ApiResultAdvisor implements ResponseBodyAdvice<Object> {
+    @Override
+    public Object beforeBodyWrite(Object body, MethodParameter returnType, ...) {
+        // If already ApiResult → just set path
+        if (body instanceof ApiResult<?> result) {
+            response.setStatusCode(HttpStatus.valueOf(result.getStatus()));
+            return result.path(path);
+        }
+        // Check @ApiFormat annotation to decide wrapping
+        // String body → wrap as JSON: JacksonUtil.toJson(ApiResult.ok(body))
+        // null body with @ApiFormat → throw RES_BODY_NULL
+        // Otherwise → ApiResult.ok(body)
+    }
+}
+```
+
+**Key behaviors**:
+- `String` return type → serialized as JSON string (not `text/plain`)
+- `null` return with `@ApiFormat` → throws `GeneralException.of(WebErrorEnum.RES_BODY_NULL)`
+- Controller returns raw `ApiResult<T>` → sets HTTP status from `ErrorCode.getStatus()`
 
 ---
 

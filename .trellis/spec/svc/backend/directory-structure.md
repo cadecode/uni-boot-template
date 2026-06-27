@@ -77,6 +77,31 @@ svc/server/admin/src/main/java/com/github/cadecode/uniboot/admin/
     └── TestFilter2.java
 ```
 
+### Test Directory Structure
+
+Tests mirror `src/main/java` package structure under `src/test/java`:
+
+```
+svc/<module>/src/test/java/com/github/cadecode/uniboot/<module>/
+├── controller/          # Controller tests
+├── service/             # Service tests
+└── mapper/              # Mapper tests (with test profile datasource)
+```
+
+### Resources Structure
+
+```
+svc/<module>/src/main/resources/
+├── application.yml          # Default config
+├── application-dev.yml      # Dev profile
+├── application-test.yml     # Test profile
+├── application-prod.yml     # Prod profile
+├── mapper/                  # MyBatis XML mapper files
+│   └── mysql/
+│       └── UserMapper.xml
+└── banner.txt               # Custom startup banner
+```
+
 ---
 
 ## Starter Module Organization
@@ -143,6 +168,20 @@ svc/common/src/main/java/com/github/cadecode/uniboot/common/
 
 ---
 
+## Spring Boot Auto-Configuration Patterns
+
+All starters use these annotations consistently:
+
+| Annotation | Purpose | Example |
+|-----------|---------|---------|
+| `@Configuration` | Marks config class | All `*Config`/`*AutoConfig` classes |
+| `@EnableConfigurationProperties` | Binds YAML prefix to `@ConfigurationProperties` bean | `@EnableConfigurationProperties(SwaggerProperties.class)` |
+| `@ConditionalOnProperty` | Enables bean only when property is set | `@ConditionalOnProperty(name = "uni-boot.swagger.title")` |
+| `@ConditionalOnMissingBean` | Allows user override | `@ConditionalOnMissingBean` on `@Bean` methods |
+| `@ConfigurationProperties(prefix = "...")` | Maps YAML to typed class | `@ConfigurationProperties(prefix = "uni-boot.swagger")` |
+
+---
+
 ## Forbidden Patterns
 
 - ❌ Do NOT put business logic in `controller` — it belongs in `service`
@@ -150,3 +189,4 @@ svc/common/src/main/java/com/github/cadecode/uniboot/common/
 - ❌ Do NOT use plural package names (`controllers`, `services`)
 - ❌ Do NOT place entity classes directly under `bean/` — use `bean/entity/`
 - ❌ Do NOT mix static utils and Spring-injected utils in the same class (use `Util` vs `Kit` suffix)
+- ❌ Do NOT skip `@ConditionalOnMissingBean` on starter `@Bean` methods — users should be able to override

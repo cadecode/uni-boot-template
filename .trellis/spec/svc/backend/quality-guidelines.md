@@ -164,6 +164,125 @@ public class UserController {
 
 ---
 
+## Enum Conversion Patterns
+
+### Database Enum Conversion (DbEnumConvertible + DefaultEnumTypeHandler)
+
+Enums stored as integers in DB:
+
+```java
+// Enum implementing DbEnumConvertible
+public enum OrderStatusEnum implements DbEnumConvertible {
+    PENDING(0, "待支付"),
+    PAID(1, "已支付"),
+    CANCELLED(2, "已取消");
+
+    private final int dbValue;
+    private final String desc;
+
+    @Override
+    public int dbValue() { return dbValue; }
+}
+```
+
+### Request Param Enum Conversion (ParamEnumConvertible + ParamEnumConvertorFactory)
+
+Controller receives enum as string query param, auto-converts:
+
+```java
+// Enum implementing ParamEnumConvertible
+public enum UserTypeEnum implements ParamEnumConvertible {
+    ADMIN("admin"),
+    USER("user");
+
+    private final String paramValue;
+
+    @Override
+    public String paramValue() { return paramValue; }
+}
+
+// Registered as Spring ConverterFactory:
+// svc/starter/web/.../convertor/ParamEnumConvertorFactory.java
+// GET /api/users?type=admin → UserTypeEnum.ADMIN
+```
+
+---
+
+## Thread Pool Configuration
+
+```java
+// svc/framework/.../config/ThreadPoolConfig.java
+@EnableAsync
+@EnableScheduling
+@Configuration
+public class ThreadPoolConfig {
+    // Scheduled tasks: @Scheduled
+    @Bean("taskScheduler")
+    public ThreadPoolTaskScheduler taskScheduler() {
+        ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
+        scheduler.setPoolSize(Runtime.getRuntime().availableProcessors());
+        scheduler.setThreadNamePrefix("taskScheduler-");
+        return scheduler;
+    }
+
+    // Async tasks: @Async("asyncExecutor")
+    @Bean("asyncExecutor")
+    public ThreadPoolTaskExecutor asyncExecutor() {
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        executor.setCorePoolSize(16);
+        executor.setMaxPoolSize(32);
+        executor.setQueueCapacity(10000);
+        executor.setThreadNamePrefix("async-task-");
+        executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+        return executor;
+    }
+}
+```
+
+---
+
+## Extension Point Patterns
+
+### Plugin (Spring Plugin Framework)
+
+```java
+// PluginService extends Spring Plugin<PluginContext>
+// svc/common/.../extension/plugin/PluginService.java
+public interface PluginService extends Plugin<PluginContext> { }
+
+// Context with ExtensionType
+public interface PluginContext {
+    ExtensionType getPluginType();
+}
+```
+
+### Pipeline (Chain of Responsibility)
+
+```java
+// Filter chain pattern
+public interface PipelineFilter<T extends PipelineContext> {
+    void doFilter(T context, PipelineFilterChain<T> filterChain);
+}
+
+public interface PipelineContext {
+    ExtensionType getPipelineType();
+    FilterSelector getFilterSelector();
+    boolean continueChain();  // false → interrupt chain
+}
+```
+
+### ExtensionType (Marker Interface)
+
+```java
+// svc/common/.../enums/ExtensionType.java
+public interface ExtensionType {
+    String getType();
+}
+// Enums implement this to define extension scenarios
+```
+
+---
+
 ## Jackson Configuration
 
 ```java
