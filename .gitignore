@@ -1,0 +1,16 @@
+# Pi agent config (local)
+.pi/
+
+### IntelliJ IDEA ###
+.idea/
+*.iws
+*.iml
+*.ipr
+
+### VS Code ###
+.vscode/
+
+### LOG ###
+/log/
+/logs/
+*.log
