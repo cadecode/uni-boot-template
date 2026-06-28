@@ -320,12 +320,12 @@ public class CheckOrderFilter extends AbstractPipelineFilter<OrderContext> {
 @Configuration
 public class OrderPipelineConfig {
     @Bean
-    public PipelineGenerator<OrderContext> orderPipeline(
+    public PipelineExecutor<OrderContext> orderPipeline(
             SaveOrderFilter f1, QueryOrderFilter f2, CheckOrderFilter f3) {
-        PipelineGenerator<OrderContext> gen = new PipelineGenerator<>();
-        gen.appendFilter(f1);
-        gen.appendFilter(f2);
-        gen.appendFilter(f3);
+        PipelineExecutor<OrderContext> gen = new PipelineExecutor<>();
+        gen.appendFilter(f1, "保存订单");
+        gen.appendFilter(f2, "查询信息");
+        gen.appendFilter(f3, "校验订单");
         return gen;
     }
 }
@@ -346,23 +346,22 @@ x-boot:
 ```java
 // FilterSelectorFactory + PipelineExecutor 执行
 @Autowired private FilterSelectorFactory selectorFactory;
-@Autowired private PipelineExecutor executor;
-@Autowired private PipelineGenerator<OrderContext> orderPipeline;
+@Autowired private PipelineExecutor<OrderContext> orderPipeline;
 
 FilterSelector selector = selectorFactory.createFilterSelector(OrderCodeEnum.PLACE_ORDER);
 OrderContext ctx = new OrderContext(OrderCodeEnum.PLACE_ORDER, selector);
-executor.accept(orderPipeline, ctx);
+orderPipeline.execute(ctx);
 ```
 
 **使用示例 — 编程式**：
 
 ```java
-PipelineGenerator<OrderContext> gen = new PipelineGenerator<>();
-gen.appendFilter(new SaveOrderFilter());
-gen.appendFilter(new CheckOrderFilter());
+PipelineExecutor<OrderContext> gen = new PipelineExecutor<>();
+gen.appendFilter(new SaveOrderFilter(), "保存订单");
+gen.appendFilter(new CheckOrderFilter(), "校验订单");
 OrderContext ctx = new OrderContext(OrderCodeEnum.PLACE_ORDER, new LocalListFilterSelector(
     List.of("SaveOrderFilter", "CheckOrderFilter")));
-gen.getFirstChain().filter(ctx);
+gen.execute(ctx);
 ```
 
 ### ExtensionType (Marker Interface)
