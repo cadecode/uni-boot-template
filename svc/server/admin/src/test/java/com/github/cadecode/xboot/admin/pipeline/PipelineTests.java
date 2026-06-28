@@ -8,7 +8,7 @@ import com.github.cadecode.xboot.common.extension.pipeline.selector.DummyFilterS
 import com.github.cadecode.xboot.common.extension.pipeline.selector.FilterSelector;
 import com.github.cadecode.xboot.common.extension.pipeline.selector.LocalListFilterSelector;
 import com.github.cadecode.xboot.common.extension.pipeline.selector.MatchAllFilterSelector;
-import com.github.cadecode.xboot.common.extension.pipeline.selector.YmlConfigFilterSelector;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -99,7 +99,7 @@ public class PipelineTests {
     @DisplayName("声明式：BIZ1 启用全部 3 个 filter")
     void testDeclarative_biz1All() {
         FilterSelector selector = createSelector(PipelineTestType.BIZ1);
-        assertTrue(selector instanceof YmlConfigFilterSelector);
+        assertTrue(selector instanceof LocalListFilterSelector);
         assertTrue(selector.matchFilter("PipelineTestFilterA"));
         assertTrue(selector.matchFilter("PipelineTestFilterB"));
         assertTrue(selector.matchFilter("PipelineTestFilterC"));
@@ -110,7 +110,7 @@ public class PipelineTests {
     @DisplayName("声明式：BIZ2 只启用 B/C")
     void testDeclarative_biz2Partial() {
         FilterSelector selector = createSelector(PipelineTestType.BIZ2);
-        assertTrue(selector instanceof YmlConfigFilterSelector);
+        assertTrue(selector instanceof LocalListFilterSelector);
         assertFalse(selector.matchFilter("PipelineTestFilterA"));
         assertTrue(selector.matchFilter("PipelineTestFilterB"));
         assertTrue(selector.matchFilter("PipelineTestFilterC"));
@@ -121,7 +121,7 @@ public class PipelineTests {
     @DisplayName("声明式：BIZ3 只启用 A")
     void testDeclarative_biz3Partial() {
         FilterSelector selector = createSelector(PipelineTestType.BIZ3);
-        assertTrue(selector instanceof YmlConfigFilterSelector);
+        assertTrue(selector instanceof LocalListFilterSelector);
         assertTrue(selector.matchFilter("PipelineTestFilterA"));
         assertFalse(selector.matchFilter("PipelineTestFilterB"));
         assertFalse(selector.matchFilter("PipelineTestFilterC"));
@@ -174,9 +174,9 @@ public class PipelineTests {
     }
 
     @Test
-    void testYmlConfigFilterSelector_fromFactory() {
+    void testLocalListFilterSelector_fromFactory() {
         FilterSelector selector = createSelector(PipelineTestType.BIZ1);
-        assertTrue(selector instanceof YmlConfigFilterSelector);
+        assertTrue(selector instanceof LocalListFilterSelector);
         assertEquals(List.of("PipelineTestFilterA", "PipelineTestFilterB", "PipelineTestFilterC"), selector.getFilterNames());
     }
 }

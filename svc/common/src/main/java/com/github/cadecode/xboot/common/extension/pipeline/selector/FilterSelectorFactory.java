@@ -10,7 +10,7 @@ import java.util.Map;
  * FilterSelector 工厂
  * <p>
  * 根据业务提供的 filter-selectors Map 创建对应的 FilterSelector：
- * - YAML 有 filter 列表 → YmlConfigFilterSelector（精确启用）
+ * - YAML 有 filter 列表 → LocalListFilterSelector（精确启用）
  * - YAML 值为 [on] → MatchAllFilterSelector（全部启用）
  * - YAML 值为 [off] → DummyFilterSelector（全部禁用）
  * - YAML 无此 type 配置 → 抛出 ExtensionException
@@ -47,6 +47,6 @@ public final class FilterSelectorFactory {
         if (enabledNames.equals(OFF)) {
             return new DummyFilterSelector();
         }
-        return new YmlConfigFilterSelector(enabledNames);
+        return new LocalListFilterSelector(enabledNames);
     }
 }

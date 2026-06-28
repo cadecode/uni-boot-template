@@ -184,7 +184,7 @@ public void placeOrder(OrderParam param) {
 
 | Selector 类型 | YAML 配置情况 | 行为 |
 |-------------|------------|------|
-| `YmlConfigFilterSelector` | type 在 YAML 中有配置 | 只匹配 YAML 中列出的 filter 名 |
+| `LocalListFilterSelector` | type 在 YAML 中有配置 | 只匹配 YAML 中列出的 filter 名 |
 | `MatchAllFilterSelector` | type 配置为 `on` | 全部 filter 生效 |
 | `DummyFilterSelector` | type 配置为 `off` | 全部 filter 禁用 |
 | — | type 未在 YAML 中配置 | 抛出 ExtensionException |
@@ -193,10 +193,10 @@ public void placeOrder(OrderParam param) {
 
 | Selector | 行为 | 使用场景 |
 |----------|------|---------|
-| `LocalListFilterSelector` | `matchFilter(name)` 检查 name 是否在列表中 | 编程式模式，精确控制哪些 filter 生效 |
+| `LocalListFilterSelector` | 基于列表的选择器 | 编程式或声明式，精确控制哪些 filter 生效 |
 | `MatchAllFilterSelector` | `matchFilter(name)` 始终返回 true | 无过滤需求时使用 |
 | `DummyFilterSelector` | `matchFilter(name)` 始终返回 false | 禁用所有 filter 时使用 |
-| `YmlConfigFilterSelector` | 基于 YAML 配置的启用列表 | 声明式模式，由 `FilterSelectorFactory` 创建 |
+
 
 > `AbstractPipelineFilter.doFilter()` 模板会先调用 `context.getFilterSelector().matchFilter(name)`，只有匹配时才执行 `handle()`。
 
@@ -381,7 +381,6 @@ common/src/main/java/.../extension/
 │   └── selector/
 │       ├── FilterSelector.java           # 选择器接口
 │       ├── LocalListFilterSelector.java  # 基于本地列表的选择器
-│       ├── YmlConfigFilterSelector.java  # 基于 YAML 启用列表的选择器
 │       ├── MatchAllFilterSelector.java   # 全匹配选择器
 │       ├── DummyFilterSelector.java      # 全禁用选择器
 │       └── FilterSelectorFactory.java    # 静态工具，按 type + Map 创建 Selector
