@@ -2,6 +2,7 @@ package com.github.cadecode.xboot.common.extension.pipeline.filter;
 
 import com.github.cadecode.xboot.common.extension.pipeline.PipelineContext;
 import com.github.cadecode.xboot.common.extension.pipeline.PipelineFilterChain;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 过滤器抽象类
@@ -9,6 +10,7 @@ import com.github.cadecode.xboot.common.extension.pipeline.PipelineFilterChain;
  * @author Cade Li
  * @date 2023/6/20
  */
+@Slf4j
 public abstract class AbstractPipelineFilter<T extends PipelineContext> implements PipelineFilter<T> {
 
     /**
@@ -16,12 +18,14 @@ public abstract class AbstractPipelineFilter<T extends PipelineContext> implemen
      */
     @Override
     public void doFilter(T context, PipelineFilterChain<T> filterChain) {
-        // 如果包含该 filter
         if (context.getFilterSelector().matchFilter(this.getClass().getSimpleName())) {
             handle(context);
         }
         if (context.continueChain()) {
             filterChain.next(context);
+        } else {
+            log.info("Pipeline chain interrupted by [{}] for type '{}'",
+                    this.getClass().getSimpleName(), context.getPipelineType().getType());
         }
     }
 
