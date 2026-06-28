@@ -197,6 +197,7 @@ public void placeOrder(OrderParam param) {
 | `MatchAllFilterSelector` | `matchFilter(name)` 始终返回 true | 无过滤需求时使用 |
 | `DummyFilterSelector` | `matchFilter(name)` 始终返回 false | 禁用所有 filter 时使用 |
 
+> **扩展数据源**：`FilterSelectorFactory.createFilterSelector(type, map)` 接收 `Map<String, List<String>>`，与来源无关。从 YAML、DB、Nacos 加载的数据只要转成 Map 即可传入，无需自定义 Selector。如确需自定义，实现 `FilterSelector` 接口的两个方法即可。
 
 > `AbstractPipelineFilter.doFilter()` 模板会先调用 `context.getFilterSelector().matchFilter(name)`，只有匹配时才执行 `handle()`。
 
