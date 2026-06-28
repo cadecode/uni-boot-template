@@ -8,7 +8,7 @@
 
 <!-- @@@auto:current-status -->
 - **Active File**: `journal-1.md`
-- **Total Sessions**: 1
+- **Total Sessions**: 2
 - **Last Active**: 2026-06-28
 <!-- @@@/auto:current-status -->
 
@@ -19,7 +19,7 @@
 <!-- @@@auto:active-documents -->
 | File | Lines | Status |
 |------|-------|--------|
-| `journal-1.md` | ~41 | Active |
+| `journal-1.md` | ~81 | Active |
 <!-- @@@/auto:active-documents -->
 
 ---
@@ -29,6 +29,7 @@
 <!-- @@@auto:session-history -->
 | # | Date | Title | Commits | Branch |
 |---|------|-------|---------|--------|
+| 2 | 2026-06-28 | Pipeline 配置下沉 + README/Spec 优化 | `7b8eebf`, `f68eddc`, `20d5b52`, `f107e1c`, `0df7105`, `8d8a78f`, `3c856fe`, `d8e68e1` | `dev` |
 | 1 | 2026-06-28 | Bootstrap Trellis monorepo specs from existing docs | `9857c7e`, `1894d48` | `dev` |
 <!-- @@@/auto:session-history -->
 
