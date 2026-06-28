@@ -256,12 +256,45 @@ public interface PluginContext {
 }
 ```
 
-### Pipeline (Chain of Responsibility)
+**使用示例**：
 
 ```java
-// Filter chain pattern
+// 定义插件接口
+public interface PayPlugin extends PluginService {
+    void pay(OrderModel model);
+}
+
+// 实现策略 — supports() 运行时匹配
+@Component
+public class AliPayPlugin implements PayPlugin {
+    @Override
+    public boolean supports(PluginContext context) {
+        return PayTypeEnum.ALIPAY.equals(context.getPluginType());
+    }
+    @Override
+    public void pay(OrderModel model) { /* 支付宝支付 */ }
+}
+
+// Application 类注册
+@SpringBootApplication
+@EnablePluginRegistries({PayPlugin.class})
+public class AdminApplication { }
+
+// 通过 PluginSelectorExecutor 调用
+@Autowired private PluginSelectorExecutor executor;
+
+executor.execute(PayPlugin.class, context, plugin -> plugin.pay(model));
+String result = executor.submit(PayPlugin.class, context, PayPlugin::getUrl);
+```
+
+### Pipeline (Chain of Responsibility)
+
+**接口契约**：
+
+```java
 public interface PipelineFilter<T extends PipelineContext> {
-    void doFilter(T context, PipelineFilterChain<T> filterChain);
+    boolean supports(ExtensionType type);                   // 声明支持的 type，对标 Plugin.supports()
+    void doFilter(T context, PipelineFilterChain<T> chain);
 }
 
 public interface PipelineContext {
@@ -269,6 +302,67 @@ public interface PipelineContext {
     FilterSelector getFilterSelector();
     boolean continueChain();  // false → interrupt chain
 }
+```
+
+**使用示例 — 声明式（推荐）**：
+
+```java
+// Filter 实现
+@Component
+public class CheckOrderFilter extends AbstractPipelineFilter<OrderContext> {
+    @Override
+    public void handle(OrderContext ctx) { /* 校验逻辑 */ }
+}
+```
+
+```java
+// 开发时构建 Pipeline，顺序固定
+@Configuration
+public class OrderPipelineConfig {
+    @Bean
+    public PipelineGenerator<OrderContext> orderPipeline(
+            SaveOrderFilter f1, QueryOrderFilter f2, CheckOrderFilter f3) {
+        PipelineGenerator<OrderContext> gen = new PipelineGenerator<>();
+        gen.appendFilter(f1);
+        gen.appendFilter(f2);
+        gen.appendFilter(f3);
+        return gen;
+    }
+}
+```
+
+```yaml
+# YAML 仅控制启用/禁用（不控制顺序）
+x-boot:
+  extension:
+    pipeline:
+      filter-selectors:
+        ORDER:
+          - SaveOrderFilter
+          - CheckOrderFilter
+          # QueryOrderFilter 未列出 = 禁用
+```
+
+```java
+// FilterSelectorFactory + PipelineExecutor 执行
+@Autowired private FilterSelectorFactory selectorFactory;
+@Autowired private PipelineExecutor executor;
+@Autowired private PipelineGenerator<OrderContext> orderPipeline;
+
+FilterSelector selector = selectorFactory.createFilterSelector(OrderCodeEnum.PLACE_ORDER);
+OrderContext ctx = new OrderContext(OrderCodeEnum.PLACE_ORDER, selector);
+executor.accept(orderPipeline, ctx);
+```
+
+**使用示例 — 编程式**：
+
+```java
+PipelineGenerator<OrderContext> gen = new PipelineGenerator<>();
+gen.appendFilter(new SaveOrderFilter());
+gen.appendFilter(new CheckOrderFilter());
+OrderContext ctx = new OrderContext(OrderCodeEnum.PLACE_ORDER, new LocalListFilterSelector(
+    List.of("SaveOrderFilter", "CheckOrderFilter")));
+gen.getFirstChain().filter(ctx);
 ```
 
 ### ExtensionType (Marker Interface)
@@ -279,6 +373,7 @@ public interface ExtensionType {
     String getType();
 }
 // Enums implement this to define extension scenarios
+// Pipeline 通过 supports(type) 声明归属，Plugin 通过 supports(context) 运行时匹配
 ```
 
 ---
