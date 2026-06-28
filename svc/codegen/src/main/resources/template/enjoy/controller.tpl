@@ -9,7 +9,7 @@ import #(controllerConfig.buildSuperClassImport());
 #end
 import #(packageConfig.entityPackage).#(entityClassName);
 import #(packageConfig.servicePackage).#(table.buildServiceClassName());
-import com.github.cadecode.uniboot.starter.web.annotation.ApiFormat;
+import com.github.cadecode.xboot.starter.web.annotation.ApiFormat;
 import com.mybatisflex.core.paginate.Page;
 #if(withSwagger && swaggerVersion.getName() == "FOX")
 import io.swagger.annotations.Api;

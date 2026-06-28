@@ -5,33 +5,33 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.github.cadecode</groupId>
-        <artifactId>uni-boot-template-parent</artifactId>
+        <artifactId>x-boot-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>uni-boot-template-framework</artifactId>
+    <artifactId>x-boot-framework</artifactId>
     <description>基础框架</description>
 
     <dependencies>
         <dependency>
             <groupId>com.github.cadecode</groupId>
-            <artifactId>uni-boot-template-common</artifactId>
+            <artifactId>x-boot-common</artifactId>
         </dependency>
         <dependency>
             <groupId>com.github.cadecode</groupId>
-            <artifactId>uni-boot-template-starter-web</artifactId>
+            <artifactId>x-boot-starter-web</artifactId>
         </dependency>
         <dependency>
             <groupId>com.github.cadecode</groupId>
-            <artifactId>uni-boot-template-starter-swagger</artifactId>
+            <artifactId>x-boot-starter-swagger</artifactId>
         </dependency>
         <dependency>
             <groupId>com.github.cadecode</groupId>
-            <artifactId>uni-boot-template-starter-datasource</artifactId>
+            <artifactId>x-boot-starter-datasource</artifactId>
         </dependency>
         <dependency>
             <groupId>com.github.cadecode</groupId>
-            <artifactId>uni-boot-template-starter-mybatis</artifactId>
+            <artifactId>x-boot-starter-mybatis</artifactId>
         </dependency>
 
         <dependency>

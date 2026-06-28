@@ -113,7 +113,7 @@ Auto-configuration classes log at DEBUG/INFO for diagnostics:
 @Configuration
 public class SwaggerAutoConfig {
     @Bean
-    @ConditionalOnProperty(name = "uni-boot.swagger.title")
+    @ConditionalOnProperty(name = "x-boot.swagger.title")
     public OpenAPI openAPI(SwaggerProperties prop) {
         log.info("Swagger enabled, title: {}", prop.getTitle());
         // ...

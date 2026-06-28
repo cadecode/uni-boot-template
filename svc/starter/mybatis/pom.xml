@@ -5,17 +5,17 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.github.cadecode</groupId>
-        <artifactId>uni-boot-template-starter</artifactId>
+        <artifactId>x-boot-starter</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>uni-boot-template-starter-mybatis</artifactId>
+    <artifactId>x-boot-starter-mybatis</artifactId>
     <description>MyBatis、MyBatis-Flex 集成</description>
 
     <dependencies>
         <dependency>
             <groupId>com.github.cadecode</groupId>
-            <artifactId>uni-boot-template-common</artifactId>
+            <artifactId>x-boot-common</artifactId>
         </dependency>
 
         <!--mybatis-flex-->

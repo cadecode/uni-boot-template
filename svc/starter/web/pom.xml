@@ -5,17 +5,17 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.github.cadecode</groupId>
-        <artifactId>uni-boot-template-starter</artifactId>
+        <artifactId>x-boot-starter</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>uni-boot-template-starter-web</artifactId>
+    <artifactId>x-boot-starter-web</artifactId>
     <description>spring webmvc 集成，提供统一格式返回、全局异常处理等</description>
 
     <dependencies>
         <dependency>
             <groupId>com.github.cadecode</groupId>
-            <artifactId>uni-boot-template-common</artifactId>
+            <artifactId>x-boot-common</artifactId>
         </dependency>
 
         <!--spring webmvc-->

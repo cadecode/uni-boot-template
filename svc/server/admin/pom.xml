@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.github.cadecode</groupId>
-        <artifactId>uni-boot-template-server</artifactId>
+        <artifactId>x-boot-server</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>uni-boot-template-server-admin</artifactId>
+    <artifactId>x-boot-server-admin</artifactId>
     <description>admin 服务</description>
 
     <properties>
@@ -18,12 +18,12 @@
     <dependencies>
         <dependency>
             <groupId>com.github.cadecode</groupId>
-            <artifactId>uni-boot-template-common</artifactId>
+            <artifactId>x-boot-common</artifactId>
         </dependency>
 
         <dependency>
             <groupId>com.github.cadecode</groupId>
-            <artifactId>uni-boot-template-framework</artifactId>
+            <artifactId>x-boot-framework</artifactId>
         </dependency>
 
         <!--test-->

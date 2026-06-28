@@ -5,17 +5,17 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.github.cadecode</groupId>
-        <artifactId>uni-boot-template-starter</artifactId>
+        <artifactId>x-boot-starter</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>uni-boot-template-starter-datasource</artifactId>
+    <artifactId>x-boot-starter-datasource</artifactId>
     <description>数据源、数据库连接池集成</description>
 
     <dependencies>
         <dependency>
             <groupId>com.github.cadecode</groupId>
-            <artifactId>uni-boot-template-common</artifactId>
+            <artifactId>x-boot-common</artifactId>
         </dependency>
 
         <!--aop-->

@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.github.cadecode</groupId>
-        <artifactId>uni-boot-template-parent</artifactId>
+        <artifactId>x-boot-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
     <packaging>pom</packaging>
-    <artifactId>uni-boot-template-starter</artifactId>
+    <artifactId>x-boot-starter</artifactId>
     <description>starter 集成</description>
 
     <modules>

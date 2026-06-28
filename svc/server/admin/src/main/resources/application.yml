@@ -75,20 +75,20 @@ springdoc:
     path: /v3/api-docs
   group-configs:
     - group: default
-      packages-to-scan: com.github.cadecode.uniboot
+      packages-to-scan: com.github.cadecode.xboot
 knife4j:
   enable: true
   setting:
     language: zh_cn
 
 # 自定义配置
-uni-boot:
+x-boot:
   framework:
     version: @project.version@
   swagger:
     title: API Docs
     description: ${spring.application.name} 接口文档
-    version: ${uni-boot.framework.version}
+    version: ${x-boot.framework.version}
     contact-name: Cade Li
-    contact-url: https://github.com/cadecode/uni-boot-template
+    contact-url: https://github.com/cadecode/x-boot-template
     contact-email: cade.li@qq.com

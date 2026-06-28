@@ -31,7 +31,7 @@ dependency (BOM) → common → starter → framework → server
 Each business module follows this standard layout:
 
 ```
-com.github.cadecode.uniboot.<module>/
+com.github.cadecode.xboot.<module>/
 ├── controller/          # REST controllers (Spring MVC @RestController)
 ├── service/             # Service interfaces
 │   └── impl/           # Service implementations (@Service)
@@ -56,12 +56,26 @@ com.github.cadecode.uniboot.<module>/
 
 - All lowercase, dot-separated
 - No plurals: `controller`, not `controllers`
-- Base package: `com.github.cadecode.uniboot.<module>`
+- Base package: `com.github.cadecode.xboot.<module>`
+
+### Project Naming Convention
+
+The project name `x-boot` is consistently reflected across three dimensions:
+
+| Dimension | Pattern | Example |
+|-----------|---------|--------|
+| Java package | `com.github.cadecode.xboot.*` | `com.github.cadecode.xboot.common` |
+| Maven artifact | `x-boot-*` | `x-boot-common`, `x-boot-parent` |
+| Config property prefix | `x-boot.*` | `x-boot.swagger`, `x-boot.framework` |
+
+**Rule**: When adding new modules or properties, follow this same `x-boot-*` / `x-boot.*` pattern.
+
+> **History**: Project was originally named `uni-boot` with package `com.github.cadecode.uniboot`, artifact `uni-boot-template-*`, property prefix `uni-boot.*`. Renamed to `x-boot` via project-wide refactor (2025).
 
 Real example — `svc/server/admin/`:
 
 ```
-svc/server/admin/src/main/java/com/github/cadecode/uniboot/admin/
+svc/server/admin/src/main/java/com/github/cadecode/xboot/admin/
 ├── AdminApplication.java
 ├── controller/
 ├── service/
@@ -82,7 +96,7 @@ svc/server/admin/src/main/java/com/github/cadecode/uniboot/admin/
 Tests mirror `src/main/java` package structure under `src/test/java`:
 
 ```
-svc/<module>/src/test/java/com/github/cadecode/uniboot/<module>/
+svc/<module>/src/test/java/com/github/cadecode/xboot/<module>/
 ├── controller/          # Controller tests
 ├── service/             # Service tests
 └── mapper/              # Mapper tests (with test profile datasource)
@@ -121,7 +135,7 @@ svc/starter/
 ### Starter Naming Convention
 
 - Module directory: `starter/<name>/` (lowercase, hyphen-free)
-- Source package: `com.github.cadecode.uniboot.starter.<name>/`
+- Source package: `com.github.cadecode.xboot.starter.<name>/`
 - Auto-config class: `<Name>AutoConfig.java` (e.g. `SwaggerAutoConfig.java`)
 - Properties class: `<Name>Properties.java` (e.g. `SwaggerProperties.java`)
 
@@ -130,7 +144,7 @@ svc/starter/
 ## Common Module Organization
 
 ```
-svc/common/src/main/java/com/github/cadecode/uniboot/common/
+svc/common/src/main/java/com/github/cadecode/xboot/common/
 ├── consts/              # Constant definitions (ApiStatus)
 ├── enums/               # Enums (ErrorCode interface, ExtensionType)
 ├── exception/           # Exception hierarchy
@@ -176,9 +190,9 @@ All starters use these annotations consistently:
 |-----------|---------|---------|
 | `@Configuration` | Marks config class | All `*Config`/`*AutoConfig` classes |
 | `@EnableConfigurationProperties` | Binds YAML prefix to `@ConfigurationProperties` bean | `@EnableConfigurationProperties(SwaggerProperties.class)` |
-| `@ConditionalOnProperty` | Enables bean only when property is set | `@ConditionalOnProperty(name = "uni-boot.swagger.title")` |
+| `@ConditionalOnProperty` | Enables bean only when property is set | `@ConditionalOnProperty(name = "x-boot.swagger.title")` |
 | `@ConditionalOnMissingBean` | Allows user override | `@ConditionalOnMissingBean` on `@Bean` methods |
-| `@ConfigurationProperties(prefix = "...")` | Maps YAML to typed class | `@ConfigurationProperties(prefix = "uni-boot.swagger")` |
+| `@ConfigurationProperties(prefix = "...")` | Maps YAML to typed class | `@ConfigurationProperties(prefix = "x-boot.swagger")` |
 
 ---
 

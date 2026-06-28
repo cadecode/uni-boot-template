@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.github.cadecode</groupId>
-        <artifactId>uni-boot-template-parent</artifactId>
+        <artifactId>x-boot-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>uni-boot-template-codegen</artifactId>
+    <artifactId>x-boot-codegen</artifactId>
     <description>代码生成器，基于 mybatis-flex</description>
 
     <properties>
@@ -20,11 +20,11 @@
     <dependencies>
         <dependency>
             <groupId>com.github.cadecode</groupId>
-            <artifactId>uni-boot-template-common</artifactId>
+            <artifactId>x-boot-common</artifactId>
         </dependency>
         <dependency>
             <groupId>com.github.cadecode</groupId>
-            <artifactId>uni-boot-template-starter-mybatis</artifactId>
+            <artifactId>x-boot-starter-mybatis</artifactId>
         </dependency>
 
         <!--test-->

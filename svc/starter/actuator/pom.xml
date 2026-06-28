@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.github.cadecode</groupId>
-        <artifactId>uni-boot-template-starter</artifactId>
+        <artifactId>x-boot-starter</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>uni-boot-template-starter-actuator</artifactId>
+    <artifactId>x-boot-starter-actuator</artifactId>
     <description>系统监控工具集成</description>
 
     <dependencies>
