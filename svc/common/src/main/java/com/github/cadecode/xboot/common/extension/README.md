@@ -21,7 +21,7 @@
 | 过滤器抽象 | `AbstractPipelineFilter<T>` | 模板方法：Selector 匹配 → `handle()` → chain 传递 |
 | 过滤器链 | `PipelineFilterChain` | 链表接口：`filter()` + `next()` |
 | 过滤器链实现 | `DefaultPipelineFilterChain` | 链表节点，持有当前 filter + 下一节点指针 |
-| 管道构建器 | `PipelineGenerator` | `appendFilter()` 构建链表，返回头节点 |
+| 管道构建执行器 | `PipelineExecutor` | `appendFilter()` 构建链表，`execute()` 执行链 |
 | 过滤器选择器 | `FilterSelector` | 运行时决定哪些 filter 生效：`matchFilter(name)` |
 | 业务类型 | `ExtensionType` | Marker 接口：`getType()` 返回业务标识 |
 
@@ -82,21 +82,20 @@ public class CheckOrderFilter extends AbstractPipelineFilter<OrderContext> {
 
 ```java
 // 构建 Pipeline
-PipelineGenerator<OrderContext> generator = new PipelineGenerator<>();
-generator.appendFilter(new SaveOrderFilter(), "保存订单");
-generator.appendFilter(new QueryOrderFilter(), "查询信息");
-generator.appendFilter(new CheckOrderFilter(), "校验订单");
+PipelineExecutor<OrderContext> executor = new PipelineExecutor<>();
+executor.appendFilter(new SaveOrderFilter(), "保存订单");
+executor.appendFilter(new QueryOrderFilter(), "查询信息");
+executor.appendFilter(new CheckOrderFilter(), "校验订单");
 
 // 构造选择器（选哪些 filter 生效）
-LocalListFilterSelector selector = new LocalListFilterSelector();
-selector.addFilter("SaveOrderFilter");
-selector.addFilter("QueryOrderFilter");
-selector.addFilter("CheckOrderFilter");
+LocalListFilterSelector selector = new LocalListFilterSelector(
+    List.of("SaveOrderFilter", "QueryOrderFilter", "CheckOrderFilter"));
 
 // 创建上下文并执行
 OrderContext context = new OrderContext(OrderCodeEnum.PLACE_ORDER, selector);
 context.setParam(orderParam);
-generator.getFirstChain().filter(context);
+executor.execute(context);
+
 // 获取处理结果
 OrderModel model = context.getModel();
 ```
@@ -249,18 +248,12 @@ public interface PayPlugin extends PluginService {
 public class AliPayPlugin implements PayPlugin {
     @Override
     public boolean supports(PluginContext context) {
-        // 运行时判断：是否匹配支付宝支付类型
         return PayTypeEnum.ALIPAY.equals(context.getPluginType());
     }
 
     @Override
     public void pay(OrderModel model) {
         System.out.println("支付宝支付");
-    }
-
-    @Override
-    public boolean supports(PluginContext delimiter) {
-        return PayTypeEnum.ALIPAY.equals(delimiter.getPluginType());
     }
 }
 
@@ -274,11 +267,6 @@ public class WeChatPayPlugin implements PayPlugin {
     @Override
     public void pay(OrderModel model) {
         System.out.println("微信支付");
-    }
-
-    @Override
-    public boolean supports(PluginContext delimiter) {
-        return PayTypeEnum.WECHAT.equals(delimiter.getPluginType());
     }
 }
 ```
@@ -302,7 +290,7 @@ public class AdminApplication {
 private PluginSelectorExecutor pluginExecutor;
 
 public void doPay(OrderModel model, PayTypeEnum payType) {
-    AdaptContext context = new AdaptContext(payType);  // PluginContext 实现
+    PluginContext context = new PluginContextImpl(payType);  // PluginContext 实现
 
     // 执行匹配的第一个插件
     pluginExecutor.execute(PayPlugin.class, context, plugin -> {
@@ -318,6 +306,8 @@ public void doPay(OrderModel model, PayTypeEnum payType) {
 **内部机制**：`PluginSelectorExecutor.selectService()` 遍历 `pluginRegistry` 中所有 bean，调用 `plugin.supports(context)` 找到匹配的插件（引用 `context.getPluginType()` 判断）。
 
 ### 2.3 适配两种上下文
+
+Plugin 支持两种 `PluginContext` 实现模式：直接实现 `PluginContext` 接口，或通过 `AbstractPluginContext` 继承。业务可根据需要选择。详见 Plugin 模块源码。
 
 ---
 
