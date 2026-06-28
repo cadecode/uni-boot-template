@@ -1,0 +1,6 @@
+{"file": ".trellis/spec/svc/backend/index.md", "reason": "Backend quality checklist and all guideline file references"}
+{"file": ".trellis/spec/svc/backend/quality-guidelines.md", "reason": "Extension Point Patterns section — Pipeline/Plugin API contracts and examples"}
+{"file": ".trellis/spec/svc/backend/directory-structure.md", "reason": "Package placement conventions for new common/ files and admin/ test filters"}
+{"file": ".trellis/spec/svc/backend/logging-guidelines.md", "reason": "SLF4J logging standards for PipelineRegistry warn/error messages"}
+{"file": ".trellis/spec/svc/backend/error-handling.md", "reason": "Exception hierarchy — PipelineRegistry should use GeneralException for config errors"}
+{"file": ".trellis/spec/guides/cross-layer-thinking-guide.md", "reason": "Pipeline crosses common (extension core) → server/admin (test usage) layers"}

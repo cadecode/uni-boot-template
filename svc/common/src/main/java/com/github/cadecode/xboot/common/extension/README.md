@@ -103,7 +103,7 @@ OrderModel model = context.getModel();
 
 #### 方式二：YAML 启用控制 ✨ 推荐
 
-开发时固定 filter 顺序，YAML 运行时控制每个业务类型启用哪些 filter。通过 `FilterSelectorFactory` 自动创建合适的 `FilterSelector`。
+开发时固定 filter 顺序，每个业务模块在自己的 YAML 中配置启用哪些 filter。通过 `FilterSelectorFactory` 静态工具解析。
 
 **Step 1：开发时构建 Pipeline（固定顺序）**
 
@@ -123,11 +123,11 @@ public class SaveOrderFilter extends AbstractPipelineFilter<OrderContext> {
 @Configuration
 public class OrderPipelineConfig {
     @Bean
-    public PipelineGenerator<OrderContext> orderPipeline(
+    public PipelineExecutor<OrderContext> orderPipeline(
             SaveOrderFilter saveFilter,
             QueryOrderFilter queryFilter,
             CheckOrderFilter checkFilter) {
-        PipelineGenerator<OrderContext> gen = new PipelineGenerator<>();
+        PipelineExecutor<OrderContext> gen = new PipelineExecutor<>();
         gen.appendFilter(saveFilter, "保存订单");    // desc + 固定顺序
         gen.appendFilter(queryFilter, "查询信息");
         gen.appendFilter(checkFilter, "校验订单");
@@ -136,42 +136,48 @@ public class OrderPipelineConfig {
 }
 ```
 
-**Step 2：YAML 配置启用/禁用**
+**Step 2：YAML 配置启用/禁用（业务模块自己的 prefix）**
 
 ```yaml
-x-boot:
-  extension:
-    pipeline:
-      enabled: true
-      filter-selectors:
-        ORDER:                        # 只配启用的 filter
-          - SaveOrderFilter
-          - CheckOrderFilter
-          # QueryOrderFilter 未列出 = 禁用
-        CHARGE:
-          - QueryOrderFilter
+order:
+  pipeline:
+    filter-selectors:
+      ORDER:                        # 只配启用的 filter
+        - SaveOrderFilter
+        - CheckOrderFilter
+        # QueryOrderFilter 未列出 = 禁用
+      CHARGE:
+        - QueryOrderFilter
 ```
 
-> YAML 列表只控制启用/禁用，不控制顺序。顺序由 `PipelineGenerator.appendFilter()` 调用顺序决定。
+```java
+// 业务模块维护自己的 Properties
+@Data
+@ConfigurationProperties(prefix = "order.pipeline")
+public class OrderPipelineProperties {
+    private Map<String, List<String>> filterSelectors;
+}
+```
 
-**Step 3：通过 FilterSelectorFactory + PipelineExecutor 执行**
+> YAML 列表只控制启用/禁用，不控制顺序。顺序由 `PipelineExecutor.appendFilter()` 调用顺序决定。
+
+**Step 3：通过 FilterSelectorFactory 静态方法创建 selector，PipelineExecutor 执行**
 
 ```java
 @Autowired
-private PipelineExecutor pipelineExecutor;
+private PipelineExecutor<OrderContext> orderPipeline;
 @Autowired
-private FilterSelectorFactory selectorFactory;
-@Autowired
-private PipelineGenerator<OrderContext> orderPipeline;
+private OrderPipelineProperties props;
 
 public void placeOrder(OrderParam param) {
-    // 工厂根据 type 创建 selector：ORDER → YmlConfigFilterSelector，UNKNOWN → MatchAllFilterSelector
-    FilterSelector selector = selectorFactory.createFilterSelector(OrderCodeEnum.PLACE_ORDER);
+    // 调用 common 的静态工厂方法，传入业务的 filter-selectors
+    FilterSelector selector = FilterSelectorFactory.createFilterSelector(
+            OrderCodeEnum.PLACE_ORDER.getType(), props.getFilterSelectors());
 
     OrderContext context = new OrderContext(OrderCodeEnum.PLACE_ORDER, selector);
     context.setParam(param);
 
-    pipelineExecutor.accept(orderPipeline, context);
+    orderPipeline.execute(context);
     OrderModel model = context.getModel();
 }
 ```
@@ -179,17 +185,20 @@ public void placeOrder(OrderParam param) {
 | Selector 类型 | YAML 配置情况 | 行为 |
 |-------------|------------|------|
 | `YmlConfigFilterSelector` | type 在 YAML 中有配置 | 只匹配 YAML 中列出的 filter 名 |
-| `MatchAllFilterSelector` | type 未在 YAML 中配置 | 全部 filter 生效 |
-| `LocalListFilterSelector` | 编程式指定 | 精确匹配指定的 filter 名 |
+| `MatchAllFilterSelector` | type 配置为 `on` | 全部 filter 生效 |
+| `DummyFilterSelector` | type 配置为 `off` | 全部 filter 禁用 |
+| — | type 未在 YAML 中配置 | 抛出 ExtensionException |
 
 ### 1.3 FilterSelector 说明
 
 | Selector | 行为 | 使用场景 |
 |----------|------|---------|
 | `LocalListFilterSelector` | `matchFilter(name)` 检查 name 是否在列表中 | 编程式模式，精确控制哪些 filter 生效 |
-| `MatchAllFilterSelector` | `matchFilter(name)` 始终返回 true | 声明式模式，由 YAML 决定启用哪些 |
+| `MatchAllFilterSelector` | `matchFilter(name)` 始终返回 true | 无过滤需求时使用 |
+| `DummyFilterSelector` | `matchFilter(name)` 始终返回 false | 禁用所有 filter 时使用 |
+| `YmlConfigFilterSelector` | 基于 YAML 配置的启用列表 | 声明式模式，由 `FilterSelectorFactory` 创建 |
 
-> `AbstractPipelineFilter.doFilter()` 模板会先调用 `context.getFilterSelector().matchFilter(name)`，只有匹配时才执行 `handle()`。声明式模式下用 `MatchAllFilterSelector` 让 YAML 编排控权。
+> `AbstractPipelineFilter.doFilter()` 模板会先调用 `context.getFilterSelector().matchFilter(name)`，只有匹配时才执行 `handle()`。
 
 ### 1.4 中断链
 
@@ -334,11 +343,14 @@ public interface PipelineFilter<T extends PipelineContext> {
     void doFilter(T context, PipelineFilterChain<T> chain);
 }
 
-// PipelineExecutor
-pipelineExecutor.accept(generator, context);
+// PipelineExecutor 构建 + 执行
+PipelineExecutor<T> gen = new PipelineExecutor<>();
+gen.appendFilter(filter, "desc");
+gen.execute(context);
 
-// FilterSelectorFactory
-FilterSelector selector = selectorFactory.createFilterSelector(type);
+// FilterSelectorFactory（静态工具）
+FilterSelector selector = FilterSelectorFactory.createFilterSelector(
+    type.getType(), props.getFilterSelectors());
 ```
 
 ### Plugin
@@ -365,21 +377,14 @@ common/src/main/java/.../extension/
 │   ├── AbstractPipelineFilter.java       # Filter 模板类
 │   ├── PipelineFilterChain.java          # Filter 链接口
 │   ├── DefaultPipelineFilterChain.java   # Filter 链实现
-│   ├── PipelineGenerator.java            # 管道构建器（appendFilter）
-│   ├── PipelineRegistry.java             # [已移除]
-│   ├── PipelineExecutor.java             # 执行器入口
-│   ├── filter/
-│   │   ├── PipelineFilter.java           # Filter 接口（含 supports 声明）
-│   │   └── AbstractPipelineFilter.java   # Filter 模板类
-│   ├── selector/
-│   │   ├── FilterSelector.java           # 选择器接口
-│   │   ├── LocalListFilterSelector.java  # 基于本地列表的选择器
-│   │   ├── YmlConfigFilterSelector.java  # 基于 YAML 启用列表的选择器
-│   │   └── MatchAllFilterSelector.java   # 全匹配选择器
-│   └── config/
-│       ├── PipelineProperties.java       # YAML 配置映射
-│       ├── FilterSelectorFactory.java    # 按 type 创建 FilterSelector
-│       └── PipelineAutoConfig.java       # Spring Boot 自动配置
+│   ├── PipelineExecutor.java             # 构建器 + 执行器
+│   └── selector/
+│       ├── FilterSelector.java           # 选择器接口
+│       ├── LocalListFilterSelector.java  # 基于本地列表的选择器
+│       ├── YmlConfigFilterSelector.java  # 基于 YAML 启用列表的选择器
+│       ├── MatchAllFilterSelector.java   # 全匹配选择器
+│       ├── DummyFilterSelector.java      # 全禁用选择器
+│       └── FilterSelectorFactory.java    # 静态工具，按 type + Map 创建 Selector
 └── plugin/
     ├── PluginService.java                # 插件服务接口
     ├── PluginContext.java                # 插件上下文接口
@@ -388,4 +393,13 @@ common/src/main/java/.../extension/
     ├── PluginSelectorExecutor.java       # 基于 Spring Plugin Registry 的执行器
     └── config/
         └── PluginAutoConfig.java         # 插件自动配置
+
+server/admin/src/main/java/.../admin/
+├── config/
+│   ├── PipelineTestProperties.java       # 业务模块示例：自己的 YAML Properties
+│   └── PipelineTestConfig.java           # 注册 Properties
+└── pipeline/                             # Filter 实现示例
+    ├── TestFilter1/2/3.java
+    ├── TestContext.java
+    └── TestType.java
 ```

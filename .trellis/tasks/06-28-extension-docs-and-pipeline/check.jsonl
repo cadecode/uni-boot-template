@@ -1,0 +1,6 @@
+{"file": ".trellis/spec/svc/backend/index.md", "reason": "Full quality checklist — 17 checkpoints covering file location, logging, exceptions, auto-config conventions"}
+{"file": ".trellis/spec/svc/backend/quality-guidelines.md", "reason": "Verify new Pipeline/Plugin spec examples match actual API"}
+{"file": ".trellis/spec/svc/backend/directory-structure.md", "reason": "Verify new files are in correct package locations"}
+{"file": ".trellis/spec/svc/backend/logging-guidelines.md", "reason": "Check PipelineRegistry uses SLF4J placeholders, no System.out"}
+{"file": ".trellis/spec/svc/backend/error-handling.md", "reason": "Check PipelineRegistry error handling follows project patterns"}
+{"file": ".trellis/spec/guides/code-reuse-thinking-guide.md", "reason": "Verify PipelineRegistry isn't duplicating existing patterns (PluginSelectorExecutor, etc.)"}

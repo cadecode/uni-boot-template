@@ -1,8 +1,6 @@
 package com.github.cadecode.xboot.common.extension.pipeline.selector;
 
-import com.github.cadecode.xboot.common.enums.ExtensionType;
 import com.github.cadecode.xboot.common.exception.ExtensionException;
-import com.github.cadecode.xboot.common.extension.pipeline.config.PipelineProperties;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
@@ -11,7 +9,7 @@ import java.util.Map;
 /**
  * FilterSelector 工厂
  * <p>
- * 根据 ExtensionType 创建对应的 FilterSelector：
+ * 根据业务提供的 filter-selectors Map 创建对应的 FilterSelector：
  * - YAML 有 filter 列表 → YmlConfigFilterSelector（精确启用）
  * - YAML 值为 [on] → MatchAllFilterSelector（全部启用）
  * - YAML 值为 [off] → DummyFilterSelector（全部禁用）
@@ -20,27 +18,24 @@ import java.util.Map;
  * @author Cade Li
  * @since 2026/6/28
  */
-public class FilterSelectorFactory {
+public final class FilterSelectorFactory {
 
     private static final List<String> ON = List.of("on");
     private static final List<String> OFF = List.of("off");
 
-    private final PipelineProperties properties;
-
-    public FilterSelectorFactory(PipelineProperties properties) {
-        this.properties = properties;
+    private FilterSelectorFactory() {
     }
 
     /**
-     * 根据 type 创建 FilterSelector
+     * 根据 typeName 和业务配置创建 FilterSelector
      *
-     * @throws ExtensionException 如果 type 未在 YAML 中配置
+     * @param typeName        ExtensionType.getType() 值
+     * @param filterSelectors 业务 YAML 配置的 filter-selectors Map
+     * @throws ExtensionException 如果 type 未在配置中找到
      */
-    public FilterSelector createFilterSelector(ExtensionType type) {
-        String typeName = type.getType();
-        Map<String, List<String>> filterSelectors = properties.getFilterSelectors();
+    public static FilterSelector createFilterSelector(String typeName, Map<String, List<String>> filterSelectors) {
         if (filterSelectors == null) {
-            throw new ExtensionException("Pipeline filter-selectors not configured at all");
+            throw new ExtensionException("Pipeline filter-selectors not configured");
         }
         List<String> enabledNames = filterSelectors.get(typeName);
         if (CollectionUtils.isEmpty(enabledNames)) {

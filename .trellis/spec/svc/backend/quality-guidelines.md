@@ -293,7 +293,6 @@ String result = executor.submit(PayPlugin.class, context, PayPlugin::getUrl);
 
 ```java
 public interface PipelineFilter<T extends PipelineContext> {
-    boolean supports(ExtensionType type);                   // 声明支持的 type，对标 Plugin.supports()
     void doFilter(T context, PipelineFilterChain<T> chain);
 }
 
@@ -332,23 +331,23 @@ public class OrderPipelineConfig {
 ```
 
 ```yaml
-# YAML 仅控制启用/禁用（不控制顺序）
-x-boot:
-  extension:
-    pipeline:
-      filter-selectors:
-        ORDER:
-          - SaveOrderFilter
-          - CheckOrderFilter
-          # QueryOrderFilter 未列出 = 禁用
+# 业务模块自己的 YAML prefix
+order:
+  pipeline:
+    filter-selectors:
+      ORDER:
+        - SaveOrderFilter
+        - CheckOrderFilter
+        # QueryOrderFilter 未列出 = 禁用
 ```
 
 ```java
-// FilterSelectorFactory + PipelineExecutor 执行
-@Autowired private FilterSelectorFactory selectorFactory;
+// FilterSelectorFactory 静态工具 + PipelineExecutor 执行
 @Autowired private PipelineExecutor<OrderContext> orderPipeline;
+@Autowired private OrderPipelineProperties props;
 
-FilterSelector selector = selectorFactory.createFilterSelector(OrderCodeEnum.PLACE_ORDER);
+FilterSelector selector = FilterSelectorFactory.createFilterSelector(
+    OrderCodeEnum.PLACE_ORDER.getType(), props.getFilterSelectors());
 OrderContext ctx = new OrderContext(OrderCodeEnum.PLACE_ORDER, selector);
 orderPipeline.execute(ctx);
 ```
@@ -372,7 +371,7 @@ public interface ExtensionType {
     String getType();
 }
 // Enums implement this to define extension scenarios
-// Pipeline 通过 supports(type) 声明归属，Plugin 通过 supports(context) 运行时匹配
+// Plugin 通过 supports(context) 运行时匹配
 ```
 
 ---
